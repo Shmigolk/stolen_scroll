@@ -47,4 +47,29 @@ this.addEventListener('scroll', () => {
 })
 
 // ********** smooth scroll ************
+const scrollLinks = document.querySelectorAll('.scroll-link');
+scrollLinks.forEach((link) => {
+    link.addEventListener('click', (e) => {
+        // prevent default
+        e.preventDefault();
+        // navigate to specific spot
+        const id = e.currentTarget.getAttribute('href').slice(1);
+        const element = document.getElementById(id);
+        // calculate the heights
+        const navHeight = navBar.getBoundingClientRect().height;
+        const containerHeight = linksContainer.getBoundingClientRect().height;
+        const fixedNav = navBar.classList.contains('fixed-nav');
+
+        let position = element.offsetTop - navHeight + fixedNav;
+        if (!fixedNav) position -= navHeight;
+        if (navHeight > 82) position += containerHeight;
+        window.scrollTo(
+            {
+                left: 0,
+                top: position
+            })
+        linksContainer.style.height = 0;
+    })
+})
+
 // select links
